@@ -152,7 +152,7 @@ But adapt this to the actual change.
 
 The most important file does not always need to be first.
 
-Sometimes an entry point provides the context needed to understand the core logic.
+Sometimes an entry point provides the context needed to understand the core logic. Other changes may be easier to understand by starting with a domain model, schema, or other foundational contract.
 
 For each reading target, include:
 
@@ -176,19 +176,62 @@ This contains the transition rules.
 
 Understand how upvote, downvote, and no-vote states change.
 
-### 5. Link directly when reliable
+#### Group related files carefully
 
-When possible, make each recommended reading target clickable.
+Multiple files may share one reading step when they serve the same conceptual role.
+
+For example, `queries.ts`, `timeline.ts`, and `analytics.ts` may belong together as **READ MODELS**.
+
+Do not group files merely to fit more files into the recommended reading list.
+
+When a reading step contains multiple files:
+
+- keep the group conceptually cohesive
+- identify which file to read first when there is a useful sequence
+- distinguish between files worth reading closely and files that only need sampling
+- avoid large groups that recreate the original PR's review burden
 
 Prefer:
 
-1. a reliable link to the relevant PR diff or changed lines
-2. otherwise, a link to the file at the PR head commit
-3. otherwise, show the exact repository-relative path
+**5. READ MODELS**
 
-Never invent or guess a URL that may not work.
+Start with `queries.ts` to understand the shared query behavior.
 
-Plain file paths are better than broken links.
+Then sample `timeline.ts` and `analytics.ts` to see how that behavior is consumed.
+
+Avoid:
+
+**5. UI FILES**
+
+Read `page.tsx`, `form.tsx`, `header.tsx`, `card.tsx`, `list.tsx`, `dialog.tsx`, and `actions.tsx`.
+
+If several files are mostly repetitive consumers of the same change, choose one representative file and explain that the others follow the same pattern.
+
+The goal is not to cover every changed file.
+
+The goal is to give the human the shortest reading path that builds an accurate mental model of the PR.
+
+### 5. Link directly when reliable
+
+Make recommended reading targets clickable when possible.
+
+For GitHub repositories, prefer a permalink to the file at the PR head commit:
+
+`https://github.com/<owner>/<repo>/blob/<head-sha>/<repository-relative-path>`
+
+Important:
+
+- `<repository-relative-path>` starts at the repository root.
+- Do not prefix the path with the commit SHA, branch name, repository name, or working-directory path.
+- The commit SHA must appear only once, immediately after `/blob/`.
+- Example:
+  `https://github.com/owner/repo/blob/abc123/src/services/vote-service.ts`
+- Never generate:
+  `https://github.com/owner/repo/blob/abc123/abc123/src/services/vote-service.ts`
+
+If you cannot confidently construct a valid link, output the repository-relative file path as plain text instead.
+
+Never guess a link.
 
 ### 6. Explain the tests
 
