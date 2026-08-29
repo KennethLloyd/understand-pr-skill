@@ -1,10 +1,8 @@
 # understand-pr
 
-A small agent skill for the final human comprehension pass before merging a pull request.
+A small agent skill for the final human comprehension pass on a pull request.
 
-It does **not** replace code review.
-
-Instead, it turns a potentially large PR into a concise mental model:
+It turns a potentially large PR into a concise mental model:
 
 - what changed
 - before → after behavior
@@ -13,6 +11,8 @@ Instead, it turns a potentially large PR into a concise mental model:
 - which files are mostly mechanical
 - which tests explain the behavior
 - the few things you should remember before merging
+
+Code review remains a separate responsibility.
 
 ## Install
 
@@ -32,15 +32,15 @@ To install globally:
 npx skills@latest add KennethLloyd/understand-pr-skill --skill understand-pr -g
 ```
 
-## Usage
+## Use
 
-Start from a fresh agent context when possible:
+Start from a fresh agent context for the initial request:
 
 ```text
 /understand-pr https://github.com/owner/repo/pull/123
 ```
 
-Then drill down naturally:
+Then ask focused follow-up questions:
 
 ```text
 Explain the second file more deeply.
@@ -56,8 +56,6 @@ Why did this repository need to change?
 
 ## Philosophy
 
-Agentic development makes generating code cheap.
+Agentic development makes code generation cheap. Understanding what is about to enter the codebase is the human bottleneck.
 
-The human bottleneck becomes understanding what is about to enter the codebase.
-
-`understand-pr` uses AI to compress the review surface without outsourcing final ownership of the code.
+`understand-pr` compresses the review surface into a mental model while keeping final ownership with the human.
